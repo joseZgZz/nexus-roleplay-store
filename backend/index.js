@@ -16,7 +16,11 @@ const Category = require('./models/Category');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // --- DISCORD WEBHOOK HELPER ---
 const sendDiscordWebhook = async (url, embed) => {
@@ -97,7 +101,10 @@ app.post('/api/auth/register', async (req, res) => {
         await newUser.save();
         const token = jwt.sign({ id: newUser._id, role: newUser.role, platform: newUser.platform }, process.env.JWT_SECRET || 'secret123', { expiresIn: '7d' });
         res.json({ token, message: 'Registro exitoso' });
-    } catch (err) { res.status(500).json({ error: 'Error del servidor' }); }
+    } catch (err) {
+        console.error('Registration Error:', err);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
 });
 
 app.post('/api/auth/login', async (req, res) => {
@@ -120,7 +127,10 @@ app.post('/api/auth/login', async (req, res) => {
         });
 
         res.json({ token, message: 'Inicio de sesión exitoso' });
-    } catch (err) { res.status(500).json({ error: 'Error del servidor' }); }
+    } catch (err) {
+        console.error('Login Error:', err);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
 });
 
 // --- CATEGORY ROUTES ---
