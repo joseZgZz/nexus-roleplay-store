@@ -19,6 +19,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AuthSuccess from "./pages/AuthSuccess";
 import Negocios from "./pages/Negocios";
+import BusinessNews from "./pages/BusinessNews";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -56,6 +57,7 @@ const App = () => {
             <Route path="/battlepass" element={<BattlePass />} />
             <Route path="/announcements" element={<Announcements />} />
             <Route path="/negocios" element={<Negocios />} />
+            <Route path="/business-news" element={<BusinessNews />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/auth-success" element={<AuthSuccess />} />

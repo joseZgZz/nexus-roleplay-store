@@ -510,6 +510,43 @@ const Admin = () => {
                                 </div>
                             </div>
                         </section>
+
+                        {/* 3. CREAR COMUNICADOS / AVISOS */}
+                        <section className="glass-card rounded-[3.5rem] p-10 border border-white/5 bg-[#111]/40">
+                            <h2 className="text-2xl font-display font-black text-white flex items-center gap-4 uppercase tracking-tighter mb-6">
+                                <Bell className="text-secondary" /> ENVIAR COMUNICADO
+                            </h2>
+                            <form onSubmit={async (e) => {
+                                e.preventDefault();
+                                try {
+                                    const token = localStorage.getItem("token");
+                                    const payload = {
+                                        title: e.target.title.value,
+                                        content: e.target.content.value,
+                                        category: e.target.category.value
+                                    };
+                                    await axios.post(`${API_URL}/api/announcements`, payload, {
+                                        headers: { Authorization: `Bearer ${token}` }
+                                    });
+                                    Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Comunicado enviado', background: '#0a0a0a', color: '#fff', showConfirmButton: false, timer: 2000 });
+                                    e.target.reset();
+                                } catch (err) {
+                                    Swal.fire("Error", "No se pudo enviar", "error");
+                                }
+                            }} className="space-y-4">
+                                <input type="text" name="title" placeholder="Título del Aviso" className="admin-input" required />
+                                <select name="category" className="admin-input" required>
+                                    <option value="Update">Global (Novedades de Servidor)</option>
+                                    <option value="Negocios">Exclusivo: Avisos de Negocios</option>
+                                    <option value="Event">Evento Especial</option>
+                                    <option value="Alert">Alerta Urgente</option>
+                                </select>
+                                <textarea name="content" placeholder="Contenido del mensaje..." className="admin-input min-h-[100px]" required></textarea>
+                                <button type="submit" className="w-full py-5 bg-secondary text-black rounded-3xl font-black text-xs tracking-widest hover:scale-[1.02] shadow-xl shadow-secondary/10 hover:bg-white transition-all uppercase">
+                                    PUBLICAR COMUNICADO
+                                </button>
+                            </form>
+                        </section>
                     </div>
 
                     {/* LISTADOS (DERECHA) */}

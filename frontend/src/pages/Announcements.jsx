@@ -21,7 +21,7 @@ const Announcements = () => {
     const fetchAnnouncements = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/announcements`);
-        setNews(res.data);
+        setNews(res.data.filter(item => item.category !== "Negocios"));
       } catch (err) { }
       setLoading(false);
     };
