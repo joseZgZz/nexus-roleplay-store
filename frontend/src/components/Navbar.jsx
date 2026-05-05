@@ -32,8 +32,8 @@ const Navbar = () => {
         { name: "Inicio", path: "/", icon: null },
         { name: "Tienda", path: "/store", icon: null },
         { name: "Novedades", path: "/announcements", icon: null },
-        { name: "Negocios", path: "/negocios", icon: Briefcase },
-        { name: "Avisos Negocios", path: "/business-news", icon: Bell },
+        { name: "NEGOCIOS", path: "/negocios", icon: Briefcase },
+        { name: "AVISOS NEGOCIOS", path: "/business-news", icon: Bell },
     ];
 
     return (
