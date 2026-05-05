@@ -12,6 +12,8 @@ import {
     Shield,
     Zap,
     ChevronRight,
+    Briefcase,
+    Bell,
 } from "lucide-react";
 
 const Navbar = () => {
@@ -27,11 +29,11 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: "Inicio", path: "/" },
-        { name: "Tienda", path: "/store" },
-        { name: "Novedades", path: "/announcements" },
-        { name: "Negocios", path: "/negocios" },
-        { name: "Avisos Negocios", path: "/business-news" },
+        { name: "Inicio", path: "/", icon: null },
+        { name: "Tienda", path: "/store", icon: null },
+        { name: "Novedades", path: "/announcements", icon: null },
+        { name: "Negocios", path: "/negocios", icon: Briefcase },
+        { name: "Avisos Negocios", path: "/business-news", icon: Bell },
     ];
 
     return (
@@ -53,9 +55,10 @@ const Navbar = () => {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center gap-2">
                         {navLinks.map((link) => (
-                            <Link key={link.name} to={link.path} className={`px-6 py-2.5 rounded-2xl text-xs font-black uppercase
-                    tracking-widest transition-all ${location.pathname === link.path
+                            <Link key={link.name} to={link.path} className={`px-4 py-2.5 rounded-2xl text-xs font-black uppercase
+                    tracking-widest transition-all flex items-center gap-2 ${location.pathname === link.path
                                     ? "bg-white/10 text-white shadow-inner" : "text-gray-400 hover:text-white hover:bg-white/5"}`}>
+                                {link.icon && <link.icon size={14} className={location.pathname === link.path ? "text-primary" : ""} />}
                                 {link.name}
                             </Link>
                         ))}
@@ -127,9 +130,9 @@ const Navbar = () => {
                         <div className="p-6 space-y-4">
                             {navLinks.map((link) => (
                                 <Link key={link.name} to={link.path} onClick={() => setIsMobileMenuOpen(false)}
-                                    className="block p-4
-                rounded-2xl text-xl font-bold text-white hover:bg-white/5 transition-all"
+                                    className="p-4 rounded-2xl text-xl font-bold text-white hover:bg-white/5 transition-all flex items-center gap-3"
                                 >
+                                    {link.icon && <link.icon size={24} className="text-primary" />}
                                     {link.name}
                                 </Link>
                             ))}
