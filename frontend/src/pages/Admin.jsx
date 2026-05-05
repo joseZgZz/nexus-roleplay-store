@@ -34,6 +34,11 @@ import {
     ImagePlus,
     Monitor,
     Gamepad2,
+    Star,
+    Car,
+    Scale,
+    Briefcase,
+    Trophy,
 } from "lucide-react";
 import API_URL from "../config/api";
 
@@ -483,7 +488,11 @@ const Admin = () => {
                                         <div key={c._id} className="flex items-center justify-between p-4 bg-white/5 rounded-2xl group hover:bg-white/[0.08] transition-all">
                                             <div className="flex items-center gap-4">
                                                 <div className="p-2 bg-secondary/10 rounded-lg text-secondary">
-                                                    {React.createElement([Package, Star, Car, Coins, Scale, ShieldAlert, Layers, Zap, Briefcase, Trophy, Gamepad2, Users, Bell, Calendar, Hash].find(icon => icon.name === c.icon) || Package, { size: 16 })}
+                                                    {(() => {
+                                                        const iconMap = { Package, Star, Car, Coins, Scale, ShieldAlert, Layers, Zap, Briefcase, Trophy, Gamepad2, Users, Bell, Calendar, Hash };
+                                                        const IconComponent = iconMap[c.icon] || Package;
+                                                        return <IconComponent size={16} />;
+                                                    })()}
                                                 </div>
                                                 <span className="text-sm font-bold text-white uppercase">{c.name}</span>
                                             </div>
