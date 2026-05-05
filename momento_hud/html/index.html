@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Momento RP HUD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app" style="display: none;">
+
+        <!-- Compass (Top Center) -->
+        <div class="compass-container">
+            <div class="compass-marker">
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="compass-strip-wrapper">
+                <div class="compass-strip" id="compassStrip">
+                    <!-- We will render the strip dynamically or static, let's do simple static for N-E-S-W -->
+                    <span>N</span><span>|</span><span>NE</span><span>|</span>
+                    <span>E</span><span>|</span><span>SE</span><span>|</span>
+                    <span>S</span><span>|</span><span>SW</span><span>|</span>
+                    <span>W</span><span>|</span><span>NW</span><span>|</span>
+                    <span>N</span><span>|</span><span>NE</span><span>|</span>
+                    <span>E</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Information (Top Right) -->
+        <div class="player-info-container">
+            <div class="info-row">
+                <div class="info-card">
+                    <i class="fa-solid fa-id-badge"></i> <span id="playerName">Nombre Apellido</span> <span
+                        class="id-tag" id="playerId">#1</span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-card job-card">
+                    <i class="fa-solid fa-briefcase"></i> <span id="playerJob">Trabajo</span>
+                </div>
+            </div>
+            <div class="info-row money-row">
+                <div class="money-card wallet">
+                    <i class="fa-solid fa-wallet"></i> <span class="money-val" id="cashAmount">$0</span>
+                </div>
+                <div class="money-card bank">
+                    <i class="fa-solid fa-building-columns"></i> <span class="money-val" id="bankAmount">$0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Minimap Outline (Bottom Left) -->
+        <div class="map-outline"></div>
+
+        <!-- Status HUD (Bottom Left next to Map) -->
+        <div class="status-container">
+            <div class="status-icon" id="health">
+                <svg viewBox="0 0 36 36">
+                    <path class="bg"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="progress" stroke-dasharray="100, 100"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <div class="status-icon" id="armor">
+                <svg viewBox="0 0 36 36">
+                    <path class="bg"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="progress" stroke-dasharray="0, 100"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="status-icon" id="hunger">
+                <svg viewBox="0 0 36 36">
+                    <path class="bg"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="progress" stroke-dasharray="100, 100"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <i class="fa-solid fa-burger"></i>
+            </div>
+            <div class="status-icon" id="thirst">
+                <svg viewBox="0 0 36 36">
+                    <path class="bg"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="progress" stroke-dasharray="100, 100"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <i class="fa-solid fa-droplet"></i>
+            </div>
+        </div>
+
+        <!-- Vehicle HUD (Bottom Right / Center) -->
+        <div class="vehicle-hud" style="display: none;">
+            <div class="speedometer">
+                <svg viewBox="0 0 100 100">
+                    <path class="speed-bg" d="M 20,80 A 40,40 0 1,1 80,80" />
+                    <path class="speed-progress" id="speedBar" d="M 20,80 A 40,40 0 1,1 80,80" stroke-dasharray="141"
+                        stroke-dashoffset="141" />
+                </svg>
+                <div class="speed-value">
+                    <span id="speedNum">000</span>
+                    <span class="speed-unit">KM/H</span>
+                </div>
+            </div>
+            <div class="vehicle-info">
+                <div class="gear-box">
+                    <span id="gearNum">N</span>
+                </div>
+                <div class="fuel-box">
+                    <i class="fa-solid fa-gas-pump"></i> <span id="fuelNum">100%</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

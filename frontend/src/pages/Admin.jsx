@@ -236,9 +236,17 @@ const Admin = () => {
 
     const handleAssignJob = async (e) => {
         e.preventDefault();
+        if (!selectedUserForAction) {
+            Swal.fire("Error", "Selecciona un usuario primero", "error");
+            return;
+        }
         try {
             const token = localStorage.getItem("token");
-            await axios.post(`${API_URL}/api/admin/assign-job`, jobForm, {
+            await axios.post(`${API_URL}/api/admin/assign-job`, {
+                userId: selectedUserForAction._id,
+                jobName: jobForm.jobName,
+                jobRole: jobForm.jobRole
+            }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             Swal.fire("Éxito", "Trabajo asignado correctamente", "success");
@@ -502,45 +510,6 @@ const Admin = () => {
                                 </div>
                             </div>
                         </section>
-
-                        {/* GESTIÓN DE EMPLEOS */}
-                        <section className="glass-card rounded-[3.5rem] p-10 border border-white/5 bg-secondary/5 border-secondary/10">
-                            <h3 className="text-[10px] font-black text-secondary uppercase tracking-[0.4em] mb-8">
-                                Asignar Trabajos / Roles
-                            </h3>
-                            <form onSubmit={handleAssignJob} className="space-y-4">
-                                <select
-                                    className="admin-input border-secondary/10"
-                                    value={jobForm.userId}
-                                    onChange={(e) => setJobForm({ ...jobForm, userId: e.target.value })}
-                                    required
-                                >
-                                    <option value="">-- Ciudadano --</option>
-                                    {users.map(u => (
-                                        <option key={u._id} value={u._id}>{u.username}</option>
-                                    ))}
-                                </select>
-                                <input
-                                    type="text"
-                                    placeholder="Nombre Negocio (Ej: Policia)"
-                                    className="admin-input border-secondary/10"
-                                    value={jobForm.jobName}
-                                    onChange={(e) => setJobForm({ ...jobForm, jobName: e.target.value })}
-                                    required
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Rango (Ej: Comisario)"
-                                    className="admin-input border-secondary/10"
-                                    value={jobForm.jobRole}
-                                    onChange={(e) => setJobForm({ ...jobForm, jobRole: e.target.value })}
-                                    required
-                                />
-                                <button type="submit" className="w-full py-4 bg-secondary text-black rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-secondary/10 hover:scale-[1.02] transition-all">
-                                    ASIGNAR TRABAJO
-                                </button>
-                            </form>
-                        </section>
                     </div>
 
                     {/* LISTADOS (DERECHA) */}
@@ -674,6 +643,34 @@ const Admin = () => {
                                                         <p className="text-xs font-bold text-white underline decoration-[#5865F2]">{selectedUserForAction.discordUsername || 'No vinculado'}</p>
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                            {/* GESTIÓN DE EMPLEOS REUBICADA */}
+                                            <div className="bg-secondary/10 border-2 border-secondary/20 rounded-3xl p-6">
+                                                <h3 className="text-xs font-black text-secondary uppercase tracking-[0.2em] mb-4">
+                                                    Asignar Trabajos / Roles
+                                                </h3>
+                                                <form onSubmit={handleAssignJob} className="flex flex-col sm:flex-row gap-4">
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Nombre Negocio (Ej: Policia)"
+                                                        className="admin-input border-secondary/10 flex-1"
+                                                        value={jobForm.jobName}
+                                                        onChange={(e) => setJobForm({ ...jobForm, jobName: e.target.value })}
+                                                        required
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Rango (Ej: Comisario)"
+                                                        className="admin-input border-secondary/10 flex-1"
+                                                        value={jobForm.jobRole}
+                                                        onChange={(e) => setJobForm({ ...jobForm, jobRole: e.target.value })}
+                                                        required
+                                                    />
+                                                    <button type="submit" className="px-6 py-4 bg-secondary text-black rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all whitespace-nowrap">
+                                                        ASIGNAR EMPLEO
+                                                    </button>
+                                                </form>
                                             </div>
 
                                             {/* Compras del Usuario */}
