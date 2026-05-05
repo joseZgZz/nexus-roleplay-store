@@ -11,12 +11,8 @@ import {
     Sparkles,
     Gamepad2,
     ChevronRight,
-    Users,
-    Server,
     Crown,
-    Briefcase,
 } from "lucide-react";
-import API_URL from "../config/api";
 import { getProxiedImage, FALLBACK_IMAGE } from "../config/imageProxy";
 
 const Home = () => {
